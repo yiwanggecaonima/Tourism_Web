@@ -35,9 +35,13 @@ class Mafengwo():
 
     def feng(self,doc):
         # doc = etree.HTML(self.browser.page_source)
+        address = doc.xpath("//div[@class='mod mod-location']/div/p/text()")
+        address = address[0] if len(address) > 0 else None
         li_list = doc.xpath("//div[@class='_j_commentlist']/div/ul/li")
         for li in li_list:
             item ={}
+            item["address"] = address
+        
             title = re.findall(r'<h1>(.*?)</h1>',self.browser.page_source)
             item["title"] = title[0] if len(title) > 0 else None
             user_link = li.xpath("./div[@class='user']/a/@href")
